@@ -20,13 +20,13 @@ test_data, test_labels = dataUtils.readData("project1testdata.csv")
 ## Tensorflow placeholder
 input_placeholder = tf.placeholder(tf.float32, shape=[None, 113])     # replace with your code
 # ## Neural network hidden layers     # replace with your code
-w1 = tf.get_variable('w1', shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
-b1 = tf.get_variable('b1', shape=[150], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_1 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, w1) + b1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+weight1 = tf.get_variable('weight1', shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
+bias1 = tf.get_variable('bias1', shape=[150], initializer=tf.contrib.layers.xavier_initializer())
+hidden_layer_1 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
 
-w2 = tf.get_variable('w2', shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
-b2 = tf.get_variable('b2', shape=[125], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, w1) + b1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+weight2 = tf.get_variable('weight2', shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
+bias2 = tf.get_variable('bias2', shape=[125], initializer=tf.contrib.layers.xavier_initializer())
+hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
 
 ## Logit layer
 logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))     # replace with your code
@@ -68,10 +68,11 @@ with tf.Session() as sess:
 
         # every 10 steps check accuracy
         if step_count % 10 == 0:
-            batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels, batch_size=100)
-
+            batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels,
+                                                                            batch_size=100)
             test_accuracy, test_loss, logits_output, _ = sess.run([accuracy, loss, logits, merged],
-                                    feed_dict={input_placeholder: batch_test_data, label_placeholder: batch_test_labels})     # replace with your code
+                                    feed_dict={input_placeholder: batch_test_data,
+                                               label_placeholder: batch_test_labels})     # replace with your code
 
 
             print("Step Count:{}".format(step_count))
@@ -79,9 +80,19 @@ with tf.Session() as sess:
             print("Test accuracy: {} loss: {}".format(test_accuracy, test_loss))
 
 
+        # Save the variable to a file
+        # creates C:/tmp/modelN00.ckpt.data-00000-of-00001
+        # creates C:/tmp/modelN00.ckpt.index
+        # creates C:/tmp/modelN00.ckpt.meta
+        # where N goes from 1 to 10
+        # NATHAN: why only keep the last 5 set of the above 3 files?
+        if step_count % 100 == 0:
+            save_path = saver.save(sess, '/tmp/model{}.ckpt'.format(step_count))
+
+
         # stop training after 1,000 steps
         if step_count > 1000:
             break
 
     # Save the variable to a file
-    save_path = saver.save(sess, 'model/model.ckpt')
+    # save_path = saver.save(sess, 'model/model.ckpt')
