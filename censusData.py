@@ -18,27 +18,27 @@ test_data, test_labels = dataUtils.readData("project1testdata.csv")
 
 # Build tensorflow blueprint
 ## Tensorflow placeholder
-input_placeholder = tf.placeholder(tf.float32, shape=[None, 113])  # replace with your code
-# ## Neural network hidden layers  # replace with your code
+input_placeholder = tf.placeholder(tf.float32, shape=[None, 113])     # replace with your code
+# ## Neural network hidden layers     # replace with your code
 w1 = tf.get_variable('w1', shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
 b1 = tf.get_variable('b1', shape=[150], initializer=tf.contrib.layers.xavier_initializer())
 hidden_layer_1 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, w1) + b1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
 
 w2 = tf.get_variable('w2', shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
 b2 = tf.get_variable('b2', shape=[125], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, w2) + b2), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, w1) + b1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
 
 ## Logit layer
-logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))  # replace with your code
+logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))     # replace with your code
 
 
 ## label placeholder
-label_placeholder = tf.placeholder(tf.float32, shape=[None, 2])  # replace with your code
+label_placeholder = tf.placeholder(tf.float32, shape=[None, 2])     # replace with your code
 
 ## loss function
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=label_placeholder, logits=logits)) # replace with your code
+loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=label_placeholder, logits=logits))    # replace with your code
 ## backpropagation algorithm
-train = tf.train.AdamOptimizer().minimize(loss) # replace with your code
+train = tf.train.AdamOptimizer().minimize(loss)    # replace with your code
 
 accuracy = dataUtils.accuracy(logits, label_placeholder)
 
@@ -64,14 +64,14 @@ with tf.Session() as sess:
 
         # train network
         training_accuracy, training_loss, logits_output, _ = sess.run([accuracy, loss, logits, train],
-                                    feed_dict={input_placeholder: batch_training_data, label_placeholder: batch_training_labels})  # replace with your code
+                                    feed_dict={input_placeholder: batch_training_data, label_placeholder: batch_training_labels})     # replace with your code
 
         # every 10 steps check accuracy
         if step_count % 10 == 0:
-            batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels,
-                                                                            batch_size=100)
+            batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels, batch_size=100)
+
             test_accuracy, test_loss, logits_output, _ = sess.run([accuracy, loss, logits, merged],
-                                    feed_dict={input_placeholder: batch_test_data, label_placeholder: batch_test_labels})  # replace with your code
+                                    feed_dict={input_placeholder: batch_test_data, label_placeholder: batch_test_labels})     # replace with your code
 
 
             print("Step Count:{}".format(step_count))
