@@ -22,6 +22,6 @@ REM C:\tmp>python -m tensorflow.tensorboard --logdir="project1"
 REM but get
 REM C:\Users\Edward Bujack\AppData\Local\Programs\Python\Python35\python.exe: No module named tensorflow.tensorboard
 
-REM NATHAN:
+REM Why does this NOT work?
 REM "C:\Users\Edward Bujack\AppData\Local\Programs\Python\Python35\python.exe" -m tensorflow.tensorboard --logdir="project1"
 REM pause
