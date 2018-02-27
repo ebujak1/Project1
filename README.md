@@ -18,10 +18,10 @@ Step Count:1000
 Training accuracy: 0.7799999713897705 loss: 0.5153344869613647  
 Test accuracy: 0.8500000238418579 loss: 0.4640749990940094
 
---------
+------------------------------
 
-Accuracy  
-![alt text](https://raw.githubusercontent.com/ebujak1/Project1/accuracy.png "accuracy")    
+### Accuracy  
+![alt text](https://raw.githubusercontent.com/ebujak1/Project1/accuracy.png "accuracy")       
   
-Loss  
+### Loss  
 ![alt text](https://raw.githubusercontent.com/ebujak1/Project1/loss.png "loss")     
