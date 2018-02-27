@@ -52,9 +52,9 @@ saver = tf.train.Saver()
 
 ## Make tensorflow session
 with tf.Session() as sess:
-    #train_writer = tf.summary.FileWriter("summary/project1", sess.graph)   # tensorboard summary
+    train_writer = tf.summary.FileWriter("/tmp/project1", sess.graph)   # tensorboard summary
     ## Initialize variables
-    sess.run(tf.global_variables_initializer())  # replace with your code
+    sess.run(tf.global_variables_initializer())     # replace with your code
 
     step_count = 0
     while True:
@@ -70,10 +70,16 @@ with tf.Session() as sess:
         if step_count % 10 == 0:
             batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels,
                                                                             batch_size=100)
+            '''
             test_accuracy, test_loss, logits_output, _ = sess.run([accuracy, loss, logits, merged],
                                     feed_dict={input_placeholder: batch_test_data,
                                                label_placeholder: batch_test_labels})     # replace with your code
+            '''
+            test_accuracy, test_loss, logits_output, summary_merged = sess.run([accuracy, loss, logits, merged],
+                                    feed_dict={input_placeholder: batch_test_data,
+                                               label_placeholder: batch_test_labels})     # replace with your code
 
+            train_writer.add_summary(summary_merged, step_count)     # replace with your code
 
             print("Step Count:{}".format(step_count))
             print("Training accuracy: {} loss: {}".format(training_accuracy, training_loss))
@@ -85,7 +91,7 @@ with tf.Session() as sess:
         # creates C:/tmp/modelN00.ckpt.index
         # creates C:/tmp/modelN00.ckpt.meta
         # where N goes from 1 to 10
-        # NATHAN: why only keep the last 5 set of the above 3 files?
+        # NATHAN: why only keep the last 5 set of the above 3 files?   For example as it creates 700 set of 3, it deletes the 200 set of 3
         if step_count % 100 == 0:
             save_path = saver.save(sess, '/tmp/model{}.ckpt'.format(step_count))
 
@@ -93,6 +99,3 @@ with tf.Session() as sess:
         # stop training after 1,000 steps
         if step_count > 1000:
             break
-
-    # Save the variable to a file
-    # save_path = saver.save(sess, 'model/model.ckpt')
