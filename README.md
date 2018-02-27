@@ -5,8 +5,8 @@
 **Edward Bujak**  
 **February 2018**
 
-Week 2 - Session 1 - Backpropagation    
-Week 2 - Session 2 - Regularization
+* Week 2 - Session 1 - Backpropagation    
+* Week 2 - Session 2 - Regularization
 
 ## Example output from training (also see output.txt in Git repo):
 
