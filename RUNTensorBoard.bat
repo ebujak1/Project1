@@ -8,6 +8,8 @@ REM del project1\*
 
 REM Enter
 REM http://DESKTOP-JLKM8MS:6006
+REM or
+REM http://DESKTOP-JLKM8MS:6006/#scalars&_smoothingWeight=0.905
 REM in browser, to view:
 REM     accuracy vs step_count
 REM     loss vs step_count
