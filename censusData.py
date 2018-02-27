@@ -91,7 +91,7 @@ with tf.Session() as sess:
         # creates C:/tmp/modelN00.ckpt.index
         # creates C:/tmp/modelN00.ckpt.meta
         # where N goes from 1 to 10
-        # NATHAN: why only keep the last 5 set of the above 3 files?   For example as it creates 700 set of 3, it deletes the 200 set of 3
+        # Why only keep the last 5 set of the above 3 files?   For example as it creates 700 set of 3, it deletes the 200 set of 3
         if step_count % 100 == 0:
             save_path = saver.save(sess, '/tmp/model{}.ckpt'.format(step_count))
 
