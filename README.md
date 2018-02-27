@@ -1,6 +1,6 @@
 # Project1
-**BBDS Deep Learning - Project 1**  
-**Deep Learning Feed Forward Neural Network**
+## BBDS Deep Learning - Project 1
+## Deep Learning Feed Forward Neural Network
 
 **Edward Bujak**  
 **February 2018**
@@ -8,7 +8,7 @@
 Week 2 - Session 1 - Backpropagation    
 Week 2 - Session 2 - Regularization
 
-Example output from training (also see output.txt in Git repo):
+## Example output from training (also see output.txt in Git repo):
 
 Step Count:990   
 Training accuracy: 0.9100000262260437 loss: 0.3921511769294739  
