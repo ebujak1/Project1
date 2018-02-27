@@ -21,7 +21,14 @@ Test accuracy: 0.8500000238418579 loss: 0.4640749990940094
 ------------------------------
 
 ### Accuracy  
+[1]
 ![alt text](https://raw.githubusercontent.com/ebujak1/Project1/accuracy.png "accuracy")       
-  
+
+[2]
+![Image](accuracy.png)
+
 ### Loss  
+[3]
 ![alt text](https://raw.githubusercontent.com/ebujak1/Project1/loss.png "loss")     
+
+[4]
