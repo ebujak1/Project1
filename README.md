@@ -1,5 +1,5 @@
 # Project1
-## BBDS Deep Learning - Project 1
+## BBDS Deep Learning
 ## Deep Learning Feed Forward Neural Network
 
 **Edward Bujak**  
