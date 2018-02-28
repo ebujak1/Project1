@@ -4,11 +4,13 @@ REM Deep Learning Feed Forward Neural Network
 REM Week 2 - February 2018
 
 cd C:\tmp
+del model*.*
+del checkpoint
 REM del project1\*
 
 REM Enter
 REM http://DESKTOP-JLKM8MS:6006
-REM or
+REM or for a smoother curve
 REM http://DESKTOP-JLKM8MS:6006/#scalars&_smoothingWeight=0.905
 REM in browser, to view:
 REM     accuracy vs step_count
