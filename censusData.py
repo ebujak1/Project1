@@ -19,20 +19,46 @@ test_data, test_labels = dataUtils.readData("project1testdata.csv")
 # Build tensorflow blueprint
 ## Tensorflow placeholder
 input_placeholder = tf.placeholder(tf.float32, shape=[None, 113])     # replace with your code
-# ## Neural network hidden layers     # replace with your code
-weight1 = tf.get_variable('weight1', shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
-bias1 = tf.get_variable('bias1', shape=[150], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_1 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+## Neural network hidden layers     # replace with your code
 
-weight2 = tf.get_variable('weight2', shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
-bias2 = tf.get_variable('bias2', shape=[125], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+
+# METHOD 1 -------------------------------------------------------------------------------------------
+# This is Week 2 - Session 1 code
+# no batch normalization
+# no dropout
+# Hidden layer 1  (shape -->num of neurons coming in, 150  neurons)
+weight1        = tf.get_variable("weight1", shape=[113, 150], initializer=tf.contrib.layers.xavier_initializer())
+bias1          = tf.get_variable("bias1", shape=[150], initializer=tf.contrib.layers.xavier_initializer())
+hidden_layer_1 = tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1)
+
+# Hidden layer 2   125 neurons and 150 coming in
+weight2        = tf.get_variable("weight2", shape=[150, 125], initializer=tf.contrib.layers.xavier_initializer())
+bias2          = tf.get_variable("bias2", shape=[125], initializer=tf.contrib.layers.xavier_initializer())
+hidden_layer_2 = tf.nn.relu(tf.matmul(hidden_layer_1, weight2) + bias2)
 
 ## Logit layer
 logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))     # replace with your code
 
+'''
+# METHOD 2 --------------------------------------------------------------------------------------------
+#Super compact code with batch normalization and dropout on each hidden layer (not the logit layer). 
 
-## label placeholder
+weight1        = tf.get_variable('weight1', shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
+bias1          = tf.get_variable('bias1', shape=[150], initializer=tf.contrib.layers.xavier_initializer())
+hidden_layer_1 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+
+weight2        = tf.get_variable('weight2', shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
+bias2          = tf.get_variable('bias2', shape=[125], initializer=tf.contrib.layers.xavier_initializer())
+# WHY IS THIS weight1 and bias1 ... and not ..... weight2 and bias2?   If it is weight2 and bias2 TensorFlow blows up. 
+hidden_layer_2 = tf.nn.dropout(tf.layers.batch_normalization(tf.nn.relu(tf.matmul(input_placeholder, weight1) + bias1), axis=1, center=True, scale=False, training=True), keep_prob=0.5)
+'''
+
+## Logit layer
+logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))     # replace with your code
+
+# ------------------------------------------------------------------------------------------------------
+
+## label placeholder (2 outputs)
 label_placeholder = tf.placeholder(tf.float32, shape=[None, 2])     # replace with your code
 
 ## loss function
